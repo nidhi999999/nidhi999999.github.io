@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nidhi Bhatia — Frontend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#15130E;
+    --paper-2:#1E1B13;
+    --line:#332E22;
+    --line-strong:#4A4432;
+    --ink:#F1ECDF;
+    --ink-soft:#B7AE9A;
+    --ink-faint:#867D68;
+    --teal:#2BC4B6;
+    --teal-deep:#57DCCF;
+    --amber:#E3A83D;
+    --surface:#1C1911;
+    --on-accent:#0C1512;
+    --max:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:16px;
+    line-height:1.55;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--teal);color:var(--on-accent);}
+
+  /* Corner marks */
+  .frame{position:relative; max-width:var(--max); margin:0 auto; padding:0 28px;}
+  .corner{position:fixed; width:22px; height:22px; z-index:40; pointer-events:none;}
+  .corner svg{width:100%;height:100%;}
+  .corner.tl{top:16px;left:16px;}
+  .corner.tr{top:16px;right:16px; transform:scaleX(-1);}
+  .corner.bl{bottom:16px;left:16px; transform:scaleY(-1);}
+  .corner.br{bottom:16px;right:16px; transform:scale(-1,-1);}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:30;
+    backdrop-filter:blur(6px);
+    background:rgba(21,19,14,0.88);
+    border-bottom:1px solid var(--line-strong);
+  }
+  nav.frame{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .brand{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; letter-spacing:.04em;}
+  .brand span{color:var(--teal-deep);}
+  .navlinks{display:flex; gap:26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.05em; text-transform:uppercase;}
+  .navlinks a{text-decoration:none; color:var(--ink-soft); position:relative; padding-bottom:3px;}
+  .navlinks a:hover{color:var(--ink);}
+  .navlinks a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--teal);transition:width .2s;}
+  .navlinks a:hover::after{width:100%;}
+  .navlinks a:focus-visible, a:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  @media(max-width:640px){
+    .navlinks{display:none;}
+    nav.frame{justify-content:center;}
+  }
+
+  /* HERO */
+  .hero{padding:86px 0 70px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.14em;
+    color:var(--teal-deep); text-transform:uppercase; margin:0 0 18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--teal);display:inline-block;}
+  h1{
+    font-size:clamp(38px,6vw,64px); line-height:1.03; margin:0 0 20px; font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:normal; color:var(--teal-deep);}
+  .hero-sub{max-width:560px; color:var(--ink-soft); font-size:17px; margin:0 0 30px;}
+  .spec-line{
+    display:flex; flex-wrap:wrap; gap:0;
+    border-top:1px solid var(--line-strong); border-bottom:1px solid var(--line-strong);
+    margin:34px 0 0;
+  }
+  .spec-item{
+    padding:12px 22px 12px 0; margin-right:22px;
+    border-right:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-soft);
+  }
+  .spec-item:last-child{border-right:none;}
+  .spec-item b{display:block; color:var(--ink); font-size:15px; font-weight:600; font-family:'IBM Plex Sans',sans-serif; margin-top:2px;}
+
+  .hero-grid{display:block; max-width:640px;}
+
+  section{padding:64px 0;}
+  .section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:34px;}
+  .section-num{font-family:'IBM Plex Mono',monospace; color:var(--teal-deep); font-size:13px; font-weight:600;}
+  h2{font-size:26px; margin:0; font-weight:700; letter-spacing:-.01em;}
+  .section-rule{flex:1; height:1px; background:var(--line-strong); margin-left:6px;}
+
+  /* STACK */
+  .stack-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line-strong); border:1px solid var(--line-strong);}
+  @media(max-width:760px){ .stack-grid{grid-template-columns:1fr;} }
+  .stack-cell{background:var(--surface); padding:22px 24px;}
+  .stack-cell .k{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--teal-deep); margin-bottom:10px;}
+  .stack-cell .v{font-size:14.5px; color:var(--ink-soft); line-height:1.65;}
+
+  /* WORK */
+  .work-list{display:flex; flex-direction:column; border-top:1px solid var(--line-strong);}
+  .work-item{
+    display:grid; grid-template-columns:190px 1fr 220px; gap:24px;
+    padding:24px 0; border-bottom:1px solid var(--line-strong);
+    align-items:start;
+  }
+  @media(max-width:760px){ .work-item{grid-template-columns:1fr; gap:8px;} }
+  .work-idx{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);}
+  .work-name{font-size:19px; font-weight:600; margin:0 0 6px;}
+  .work-name a{text-decoration:none; border-bottom:1px solid var(--line-strong);}
+  .work-name a:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .work-desc{color:var(--ink-soft); font-size:14.5px; max-width:520px;}
+  .work-stack{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:left;}
+  @media(max-width:760px){ .work-stack{text-align:left;} }
+  .work-stack span{display:inline-block; background:var(--paper-2); border:1px solid var(--line); padding:3px 8px; border-radius:2px; margin:0 6px 6px 0;}
+
+  /* EXPERIENCE */
+  .exp-list{border-left:1px solid var(--line-strong); margin-left:6px;}
+  .exp-item{position:relative; padding:0 0 30px 26px;}
+  .exp-item::before{content:""; position:absolute; left:-5px; top:4px; width:9px; height:9px; background:var(--teal); border:2px solid var(--paper);}
+  .exp-item:last-child{padding-bottom:0;}
+  .exp-top{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; margin-bottom:4px;}
+  .exp-role{font-weight:600; font-size:16.5px;}
+  .exp-org{color:var(--teal-deep); font-weight:500;}
+  .exp-dates{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint); white-space:nowrap;}
+  .exp-desc{color:var(--ink-soft); font-size:14.5px; max-width:640px;}
+
+  /* CONTACT */
+  footer{border-top:1px solid var(--line-strong); padding:54px 0 60px;}
+  .contact-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; align-items:flex-end;}
+  .contact-big{font-size:clamp(28px,4vw,42px); font-weight:700; margin:0 0 10px; letter-spacing:-.01em;}
+  .contact-links{display:flex; flex-direction:column; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:14px;}
+  .contact-links a{text-decoration:none; border-bottom:1px solid transparent;}
+  .contact-links a:hover{border-color:var(--teal); color:var(--teal-deep);}
+  .foot-note{margin-top:40px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--ink-faint); display:flex; justify-content:space-between; border-top:1px solid var(--line); padding-top:16px;}
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;} }
+  .reveal{ animation:fadeUp .6s ease both; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"><svg viewBox="0 0 22 22"><path d="M0 0 L22 0 M0 0 L0 22" stroke="#4A4432" stroke-width="1.5" fill="none"/></svg></div>
+<div class="corner tr"><svg viewBox="0 0 22 22"><path d="M0 0 L22 0 M0 0 L0 22" stroke="#4A4432" stroke-width="1.5" fill="none"/></svg></div>
+<div class="corner bl"><svg viewBox="0 0 22 22"><path d="M0 0 L22 0 M0 0 L0 22" stroke="#4A4432" stroke-width="1.5" fill="none"/></svg></div>
+<div class="corner br"><svg viewBox="0 0 22 22"><path d="M0 0 L22 0 M0 0 L0 22" stroke="#4A4432" stroke-width="1.5" fill="none"/></svg></div>
+
+<header>
+  <nav class="frame">
+    <div class="brand">NIDHI<span>.</span>BHATIA</div>
+    <div class="navlinks">
+      <a href="#stack">Stack</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="frame hero-grid">
+      <div>
+        <p class="eyebrow">Frontend Engineer — Vue.js / TypeScript</p>
+        <h1>Building interfaces<br>that hold up under<br><em>scrutiny.</em></h1>
+        <p class="hero-sub">Six years shipping component-driven UIs for SaaS, POS, and investment platforms — Vue.js, Nuxt.js, and React, with REST integration, role-based access, and reusable component systems at the core.</p>
+        <div class="spec-line">
+          <div class="spec-item">EXP<b>6+ yrs</b></div>
+          <div class="spec-item">CORE<b>Vue.js / TS</b></div>
+          <div class="spec-item">DOMAIN<b>SaaS · Fintech-adj.</b></div>
+          <div class="spec-item">BASE<b>India (Remote)</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="frame">
+      <div class="section-head reveal"><span class="section-num">01</span><h2>Stack</h2><span class="section-rule"></span></div>
+      <div class="stack-grid reveal">
+        <div class="stack-cell">
+          <div class="k">Frontend</div>
+          <div class="v">Vue.js (incl. TypeScript), Nuxt.js, React.js, Quasar, Inertia.js, component-based architecture, reusable component libraries</div>
+        </div>
+        <div class="stack-cell">
+          <div class="k">Styling</div>
+          <div class="v">Tailwind CSS, SCSS, responsive & cross-browser layout</div>
+        </div>
+        <div class="stack-cell">
+          <div class="k">Integration</div>
+          <div class="v">REST API design/integration, GraphQL, async data & failure-state handling, role-based access</div>
+        </div>
+        <div class="stack-cell">
+          <div class="k">Testing</div>
+          <div class="v">Unit testing, Jest, Jest mutation testing, Mocha</div>
+        </div>
+        <div class="stack-cell">
+          <div class="k">Backend (supporting)</div>
+          <div class="v">PHP, Laravel (Livewire, Nova, Filament), Symfony, Yii, CakePHP, Node.js basics</div>
+        </div>
+        <div class="stack-cell">
+          <div class="k">Cloud &amp; Ops</div>
+          <div class="v">AWS (SNS, SendGrid), Docker, Git/GitHub/GitLab, CI/CD pipelines</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="frame">
+      <div class="section-head reveal"><span class="section-num">02</span><h2>Selected work</h2><span class="section-rule"></span></div>
+      <div class="work-list reveal">
+
+        <div class="work-item">
+          <div class="work-idx">01 / GITBREEZE</div>
+          <div>
+            <h3 class="work-name">Gitbreeze</h3>
+            <p class="work-desc">Frontend build on Vue with TypeScript — the closest hands-on match to a Vue 3 + TS production stack.</p>
+          </div>
+          <div class="work-stack"><span>Vue.js</span><span>TypeScript</span></div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-idx">02 / RENTMARKETPLACE</div>
+          <div>
+            <h3 class="work-name"><a href="https://www.rentmarketplace.com/" target="_blank" rel="noopener">Rentmarketplace ↗</a></h3>
+            <p class="work-desc">Role-based login and an in-platform messenger. Owners and renters raise tickets, reply, and reopen/close threads, with forwarding and reminder notifications on activity.</p>
+          </div>
+          <div class="work-stack"><span>Vue.js</span><span>Laravel</span><span>PayPal</span></div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-idx">03 / TABRABBIT</div>
+          <div>
+            <h3 class="work-name"><a href="https://tabrabbit.com/" target="_blank" rel="noopener">Tabrabbit ↗</a></h3>
+            <p class="work-desc">Restaurant operations dashboard — staff logins, punch/menu/category management, billing, floor plan, and KDS reporting. Migrated the legacy CodeIgniter frontend to Laravel + React from scratch.</p>
+          </div>
+          <div class="work-stack"><span>Laravel</span><span>React.js</span><span>MySQL</span></div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-idx">04 / INRENTO</div>
+          <div>
+            <h3 class="work-name"><a href="https://inrento.com/" target="_blank" rel="noopener">InRento ↗</a></h3>
+            <p class="work-desc">Rental-investment platform with project subscriptions and a risk-scoring visualisation. Same logic flow reused across sibling platforms (Maxcrowdfund, Evoestate, Relender) with per-market profit-rule variations.</p>
+          </div>
+          <div class="work-stack"><span>Symfony</span><span>Paysera</span><span>Mangopay</span></div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-idx">05 / PODIUM</div>
+          <div>
+            <h3 class="work-name">Podium</h3>
+            <p class="work-desc">Nuxt/Vue application built with an AI-assisted development workflow.</p>
+          </div>
+          <div class="work-stack"><span>Vue.js</span><span>Nuxt.js</span></div>
+        </div>
+
+        <div class="work-item">
+          <div class="work-idx">06 / SHADOW MAILER</div>
+          <div>
+            <h3 class="work-name"><a href="https://www.shadowmailer.com/" target="_blank" rel="noopener">Shadow Mailer ↗</a></h3>
+            <p class="work-desc">Mailing-server system — multiple sending servers, sending-identity rotation, custom templates, per-identity subscriptions, and managed cron jobs.</p>
+          </div>
+          <div class="work-stack"><span>Laravel</span><span>MySQL</span><span>Postgres</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="frame">
+      <div class="section-head reveal"><span class="section-num">03</span><h2>Experience</h2><span class="section-rule"></span></div>
+      <div class="exp-list reveal">
+        <div class="exp-item">
+          <div class="exp-top"><span class="exp-role">Technical Leader <span class="exp-org">— JPTech</span></span><span class="exp-dates">Feb 2025 – Present</span></div>
+          <p class="exp-desc">Full-stack delivery for SaaS, POS, and investment-platform clients; frontend SPAs from build through production, REST API integration, and CI/CD ownership.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-top"><span class="exp-role">Senior Software Engineer <span class="exp-org">— Capital Numbers</span></span><span class="exp-dates">2023 – Feb 2025</span></div>
+          <p class="exp-desc">Full-stack development on Laravel, Nuxt.js and Vue.js. Improved API data-handling efficiency by 35%; refactored legacy code into a modular structure, cutting maintenance time by 40%.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-top"><span class="exp-role">Asst. Technical Leader <span class="exp-org">— Logix Built Solutions</span></span><span class="exp-dates">2021 – 2023</span></div>
+          <p class="exp-desc">Progressed from developer to technical lead across concurrent frontend/backend projects; improved application security and implemented CI/CD pipelines.</p>
+        </div>
+        <div class="exp-item">
+          <div class="exp-top"><span class="exp-role">PHP Developer <span class="exp-org">— Varshaa Weblabs</span></span><span class="exp-dates">2019 – 2021</span></div>
+          <p class="exp-desc">Built REST APIs and reusable UI components with Laravel and Vue/ElementUI; shipped a dynamic CRUD module reused across client platforms.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="frame">
+    <div class="contact-grid reveal">
+      <div>
+        <p class="contact-big">Let's talk<br>frontend.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:nidhisindha1@gmail.com">nidhisindha1@gmail.com</a>
+        <a href="tel:+917226060012">+91 7226060012</a>
+      </div>
+    </div>
+    <div class="foot-note frame" style="padding-left:0;padding-right:0;">
+      <span>NIDHI BHATIA / FRONTEND ENGINEER</span>
+      <span>REV. 2026-08</span>
+    </div>
+  </div>
+</footer>
+
+
+
+</body>
+</html>
+
